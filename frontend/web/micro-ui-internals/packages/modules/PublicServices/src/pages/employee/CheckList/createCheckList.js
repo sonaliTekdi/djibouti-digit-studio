@@ -24,6 +24,11 @@ const CreateCheckList = () => {
   const [loading, setLoading] = useState(false);
   const [showToast, setShowToast] = useState(null);
   const tenantId = Digit.ULBService.getCurrentTenantId();
+  const userDetails = Digit.UserService.getUser();
+  const isHOD = userDetails?.info?.roles?.some(
+    (role) => role.code === "BPA_HOD" || role.code === "BPA_SDECC_HOD"
+  );
+
 
   const [config, setConfig] = useState(null);
 
@@ -268,7 +273,16 @@ const CreateCheckList = () => {
   return (
     <div>
       {config && loading ? (
-        <div style={state !== code.split(".")[1] ? { pointerEvents: "none", opacity: 0.7 } : {}}>
+        <div
+          style={
+            isHOD
+              ? {}
+              : state !== code.split(".")[1]
+                ? { pointerEvents: "none", opacity: 0.7 }
+                : {}
+          }
+        >
+
           <FormComposerV2
             defaultValues={defValues}
             label={t("BPA_SUBMIT")}
