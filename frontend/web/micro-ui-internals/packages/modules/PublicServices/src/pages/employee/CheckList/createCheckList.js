@@ -28,6 +28,12 @@ const CreateCheckList = () => {
   const isHOD = userDetails?.info?.roles?.some(
     (role) => role.code === "BPA_HOD" || role.code === "BPA_SDECC_HOD"
   );
+  const styleCondition =
+    isHOD
+      ? {}
+      : state !== code.split(".")[1]
+        ? { pointerEvents: "none", opacity: 0.7 }
+        : {};
 
 
   const [config, setConfig] = useState(null);
@@ -274,13 +280,7 @@ const CreateCheckList = () => {
     <div>
       {config && loading ? (
         <div
-          style={
-            isHOD
-              ? {}
-              : state !== code.split(".")[1]
-                ? { pointerEvents: "none", opacity: 0.7 }
-                : {}
-          }
+          style={styleCondition}
         >
 
           <FormComposerV2

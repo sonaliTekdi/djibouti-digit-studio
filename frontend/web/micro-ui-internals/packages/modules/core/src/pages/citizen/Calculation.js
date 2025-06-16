@@ -9,6 +9,12 @@ const Calculation = () => {
   const isHOD = userDetails?.info?.roles?.some(
     (role) => role.code === "BPA_HOD" || role.code === "BPA_SDECC_HOD"
   );
+  const styleCondition =
+    isHOD
+      ? {}
+      : state !== code.split(".")[1]
+        ? { pointerEvents: "none", opacity: 0.7 }
+        : {};
 
   const [floorData, setFloorData] = useState([
     { name: t('CALCULATION_RDC'), residentialArea: 0, commercialArea: 0, totalArea: 0, cost: 0, floorNo: 0 },
@@ -283,13 +289,7 @@ const Calculation = () => {
   return (
     <div
       className="calculation-container"
-      style={
-        isHOD
-          ? {}
-          : queryStrings?.state !== checklistStatus?.split(".")[1]
-            ? { pointerEvents: "none", opacity: 0.7 }
-            : {}
-      }
+      style={styleCondition}
     >
       <div className="calculation-wrapper">
         <h1 className="page-title">{t('CALCULATION_TITLE')}</h1>
